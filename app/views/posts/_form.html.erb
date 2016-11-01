@@ -1,0 +1,27 @@
+<% if @post.errors.any? %>
+	<h2>You have to fix these before creating this post</h2>
+		<ul>
+			<% @post.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+			<% end %>
+		</ul>
+<% end %>
+
+<%= form_for @post do |f| %>
+
+	<%= f.label :title %>
+	<br/>
+	<%= f.text_field :title %>
+	<br/>
+	<%= f.label :description %>
+	<br/>
+	<%= f.text_area :description %>
+	<br/>
+	<%= f.collection_check_boxes :jobtype_ids, Jobtype.all, :id, :name do |jt| %>
+		<% jt.label(class: "check-box-inline") {jt.check_box(class: "checkbox") + jt.text} %>
+	<% end %>
+	<br/>
+	<%= f.submit %>
+<% end %>
+
+<%= link_to "Back to posts listing", posts_path %>

@@ -1,0 +1,20 @@
+<h1>Showing selected post</h1>
+
+<p>title: <%= @post.title %></p>
+<br/>
+<p>description: <%= @post.description %></p>
+<br/>
+<% if @post.jobtypes.any? %>
+	<p>jobtypes: <%= render @post.jobtypes %></p>
+<% end %>
+
+<br/>
+
+<%= link_to "Back to posts listing", posts_path %>
+<br/>
+
+<% if signed_in? && (current_employer == @post.employer || current_employer.admin?) %>
+	<%= link_to "Edit this post", edit_post_path(@post) %>
+	<%= link_to "Delete this post", post_path(@post), method: :delete,
+									data: { confirm: "Are you sure you want to delete this post?"} %>
+<% end %>

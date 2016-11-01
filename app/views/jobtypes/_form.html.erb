@@ -1,0 +1,9 @@
+<%= render 'layouts/messages'  %>
+
+<%= form_for @jobtype do |f| %>
+	<%= f.label :name %>
+	<br/>
+	<%= f.text_field :name %>
+	<br/>
+	<%= f.submit %>
+<% end %>

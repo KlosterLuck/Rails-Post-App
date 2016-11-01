@@ -1,0 +1,28 @@
+<h1><%= "Jobtype: " + @jobtype.name %></h1>
+
+<% if signed_in? and current_user.try(:admin?) || current_employer.try(:admin?) %>
+	<span><%= link_to "Edit Jobtype Name", edit_jobtype_path(@jobtype) %></span>
+<% end %>
+
+<table>
+	<tr>
+		<th>Title</th>
+		<th>Description</th>
+		<th>Jobtypes</th>
+	</tr>
+
+	<% @jobtype_posts.each do |post| %>
+		<tr>
+			<td><%= post.title %></td>
+			<td><%= post.description %></td>
+			<td>
+			<% if post.jobtypes.any? %>
+				<%= render post.jobtypes %>
+			<% end %>	
+			</td>
+			<td><%= link_to 'Edit', edit_post_path(post) %></td>
+			<td><%= link_to 'Show', post_path(post) %></td>
+			<td><%= link_to 'Delete', post_path(post), method: :delete, data: {confirm: "Are you sure?"} %></td>
+		</tr>
+	<% end %>
+</table>

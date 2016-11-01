@@ -1,0 +1,40 @@
+<h1>All posts</h1>
+<!-- Search form  -->
+	<%= form_tag(posts_path, :method => "get", id: "search-form") do %>
+		<%= text_field_tag :search, params[:search], placeholder: "Search Posts" %>
+		<%#= select_tag "category_id", options_from_collection_for_select(Jobtype.all, "id", "name") %>
+		<%#= select_tag "jobtype_id", options_from_collection_for_select(Jobtype.all, "id", "name",params[:search]) %>
+		<%= submit_tag "Search" %>
+
+	<% end %>
+
+<% if @posts.present? %>
+<!-- Listing -->
+	<%= link_to "Create new post", new_post_path %>
+	<br/>
+	<table>
+		<tr>
+			<th>Title</th>
+			<th>Description</th>
+			<th>Jobtypes</th>
+		</tr>
+
+		<% @posts.each do |post| %>
+			<tr>
+				<td><%= post.title %></td>
+				<td><%= post.description %></td>
+				<td>
+				<% if post.jobtypes.any? %>
+					<%= render post.jobtypes %>
+				<% end %>	
+				</td>
+				<td><%= link_to 'Edit', edit_post_path(post) %></td>
+				<td><%= link_to 'Show', post_path(post) %></td>
+				<td><%= link_to 'Delete', post_path(post), method: :delete, data: {confirm: "Are you sure?"} %></td>
+			</tr>
+		<% end %>
+	</table>
+<!-- -->
+<% else %>
+  <p>There are no posts containing the term(s) <%= params[:search] %>.</p>
+<% end %>
